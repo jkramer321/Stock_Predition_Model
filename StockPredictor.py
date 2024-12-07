@@ -4,9 +4,17 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+import numpy as np
+from datetime import timedelta
+
 
 #defining a stock symbol from the user
 stock_symbol = st.text_input("Enter a stock symbol", "AAPL");
+
+
+#set the title of the web app
+st.title('Stock Price Predictor')
+
 
 #getting start date from the user
 start_date = st.date_input("Start date", pd.to_datetime('2020-01-01'));
@@ -43,7 +51,8 @@ if not stock_data.empty:
     predictions = model.predict(X_test)
 
     # Compare predictions with actual values
-    results = pd.DataFrame({'Actual': y_test, 'Predicted': predictions})
+    results = pd.DataFrame({'Actual': y_test, 'Predicted': predictions},index=X_test.index)
+    st.write("Actual vs Predicted:")
     st.write(results.head())
 
     # Calculate the Mean Squared Error
@@ -59,8 +68,25 @@ if not stock_data.empty:
 
     # Display the predicted value at the end date
     st.write(f"Predicted closing price for {end_date}: {final_prediction:.2f}")
+
+    # Forecasting future values
+    st.write("Future Predictions:")
+    num_future_days = 7  # Number of days to predict into the future
+    future_dates = [end_date + timedelta(days=i) for i in range(1, num_future_days + 1)]
+    future_ma = [final_value_input[0][0] for _ in range(num_future_days)]  # Assumes constant moving average
+    future_predictions = model.predict(np.array(future_ma).reshape(-1, 1))
+
+    # Create a dataframe for the future dates and predictions
+    future_data = pd.DataFrame({'Date': future_dates, 'Predicted Close': future_predictions})
+    st.write(future_data);
+
+    # Plotting the future predictions
+    st.line_chart(future_data.set_index('Date'))
+
     
+    # Otherwise, display an error message
 else:
+    # Display an error message if the data is empty
     st.write("No data found for the given stock symbol and date range")
 
 

@@ -18,11 +18,11 @@ This is a web-based application to predict stock prices using a custom linear re
 
 ## Setup and Installation
 1. **Clone the Repository**:
-  - git clone https://github.com/jkramer321/stock-price-predictor.git
+  - git clone https://github.com/jkramer321/Stock_Predition_Model.git
 2. **Install Dependencies**: Install required libraries
   - pip install -r requirements.txt
 3. **Run the Application**:
-  - streamlit run StockPredictor.py
+  - streamlit run Stock_Predition_Model.py
 4.  **Access the App**: Open the URL provided in the terminal (usually http://localhost:8501).
 
 ## How It Works

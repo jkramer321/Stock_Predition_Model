@@ -1,7 +1,7 @@
 import yfinance as yf
 import streamlit as st
 import pandas as pd
-from sklearn.linear_model import LinearRegression
+from linear_regression import Linear_Regression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 import numpy as np
@@ -43,7 +43,7 @@ if not stock_data.empty:
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
 
     #create a linear regression model
-    model = LinearRegression()
+    model = Linear_Regression()
     #fit the model
     model.fit(X_train, y_train)
 
